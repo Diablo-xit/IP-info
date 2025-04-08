@@ -1,43 +1,42 @@
 const status = document.getElementById("status");
 const info = document.getElementById("info");
+const ipAddress = document.getElementById("ask");
 
-
-const ipAddress =document.getElementById("ask");
-
-document.getElementById("find").addEventListener("click",()=>{ 
+document.getElementById("find").addEventListener("click", () => {
   if (ipAddress.value) {
-  fetch(`http://ip-api.com/json/${ipAddress.value}`)
-    .then(response => {
-      if (!response.ok) {
-        throw new Error("Erreur de réseau");
-      }
-      return response.json();
-    })
-    .then(responseData => {
-      
-      info.innerHTML = `
-        <b>IP</b>: ${responseData.query} <br>
-        <b>Pays  </b>: ${responseData.country} <br>
-          <b>Région  </b>: ${responseData.regionName} <br>
-          <b>Ville  </b>: ${responseData.city} <br>
-          <b>Code postal  </b>: ${responseData.zip} <br>
-         <b> Latitude  </b>: ${responseData.lat} <br>
-         <b> Longitude  </b>: ${responseData.lon} <br>
-          <b>Fournisseur  </b>: ${responseData.isp} <br>
-      `;
-      ipAddress.value="";
-      
-    
-      
-    })
-    
-    .catch(error => {
-      status.innerHTML = `Une erreur s'est produite: ${error}`;
-    })
-    .finally(() => {
-      console.log("Opération terminée");
-    });
-} else {
-  status.innerHTML = "Aucune adresse IP saisie☘️...";
-}
-})
+    fetch(`https://ipwho.is/${ipAddress.value}`)
+      .then(response => {
+        if (!response.ok) {
+          throw new Error("Erreur de réseau");
+        }
+        return response.json();
+      })
+      .then(responseData => {
+        if (responseData.success === false) {
+          throw new Error(responseData.message || "IP invalide");
+        }
+
+        info.innerHTML = `
+          <b>IP</b>: ${responseData.ip} <br>
+          <b>Pays</b>: ${responseData.country} <br>
+          <b>Région</b>: ${responseData.region} <br>
+          <b>Ville</b>: ${responseData.city} <br>
+          <b>Code postal</b>: ${responseData.postal} <br>
+          <b>Latitude</b>: ${responseData.latitude} <br>
+          <b>Longitude</b>: ${responseData.longitude} <br>
+          <b>Fournisseur</b>: ${responseData.connection?.isp || "Inconnu"} <br>
+        `;
+
+        ipAddress.value = "";
+        status.innerHTML = "";
+      })
+      .catch(error => {
+        status.innerHTML = `Une erreur s'est produite: ${error.message}`;
+      })
+      .finally(() => {
+        console.log("Opération terminée");
+      });
+  } else {
+    status.innerHTML = "Aucune adresse IP saisie☘️...";
+  }
+});
