@@ -1,0 +1,60 @@
+body{
+display:flex;
+justify-content: center;
+align-items: center;
+}
+.ip-box{
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap:40px;
+  text-align: center;
+  width:100%;
+  background:rgba(0,0,255,0.7);
+  
+  
+  flex-direction: column;
+  height:auto;
+  border-radius:30px;
+  
+}
+h2{
+  text-align:left;
+}
+#status{
+  color:red;
+}
+button{
+  
+
+  height:40px;
+  border:none;
+  border-radius:2rem;
+  background: rgba(0,255,0,0.7);
+  font-weight: bold;
+  text-transform: uppercase;
+  color:#fff;
+  letter-spacing: 7px;
+}
+input{
+  
+  border-color:green;
+  height:30px;
+  border-radius:1rem;
+}
+ #info{
+   color:#FFC;
+ }
+ b{
+   color:gold;
+ }
+ h2{
+   COLOR:#FFF;
+ }
+ button,input{
+   width:80%;
+   
+ }
+ button:hover{
+   background: #ccc;
+ }
